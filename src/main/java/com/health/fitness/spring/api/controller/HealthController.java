@@ -49,7 +49,7 @@ public class HealthController {
 			calories = (int)(bmr * 1.9);
 		}
 		
-		return new CalorieVariations(calories - 200, calories, calories + 200);
+		return new CalorieVariations(calories - 500,calories - 200, calories, calories + 200);
 
 	}
 	
