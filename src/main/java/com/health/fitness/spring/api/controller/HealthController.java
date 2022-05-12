@@ -15,8 +15,8 @@ public class HealthController {
  
 	@PostMapping("/bmi")
 	public HealthStatus calculateBMIMetric(@RequestBody Metrics metrics) {
-		double meters = metrics.height / 100;
-		double bmi = metrics.weight / (meters * meters);
+	
+		double bmi = metrics.weight / (metrics.height * metrics.height);
 		String bmiRange;
 		if(bmi < 18.5) {
 			bmiRange = "underweight";
