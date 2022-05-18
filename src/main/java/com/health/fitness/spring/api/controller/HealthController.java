@@ -1,22 +1,21 @@
 package com.health.fitness.spring.api.controller;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import healt.fitness.api.model.CalorieVariations;
-import healt.fitness.api.model.FitnessStatus;
 import healt.fitness.api.model.HealthStatus;
-import healt.fitness.api.model.Metrics;
+
 
 @RestController
 @CrossOrigin("*")
 public class HealthController {
  
-	@PostMapping("/bmi")
-	public HealthStatus calculateBMIMetric(@RequestBody Metrics metrics) {
-	
-		double bmi = metrics.weight / (metrics.height * metrics.height);
+	@GetMapping("/bmi")
+	public HealthStatus calculateBMIMetric(@RequestParam Double height, @RequestParam Double weight  ) {
+		height = height / 100;
+		double bmi = weight / (height * height);
 		String bmiRange;
 		if(bmi < 18.5) {
 			bmiRange = "underweight";
@@ -28,24 +27,24 @@ public class HealthController {
 		return new HealthStatus( bmi, bmiRange);
 	}
   
-	@PostMapping("/calories")
-	public CalorieVariations  calculteCalories(@RequestBody FitnessStatus stats) {
+	@GetMapping("/calories")
+	public CalorieVariations  calculteCalories(@RequestParam Double height,  @RequestParam Double weight, @RequestParam  int age,  @RequestParam char gender, @RequestParam char activity) {
 		double bmr = 0;
 		int calories = 0;
-		if(stats.gender == 'm') {
-	    bmr = 66.5 + (13.75 * stats.weight) + (5.003 * stats.height ) - (6.75 * stats.age);
-		} else if (stats.gender == 'f') {
-			bmr = 655.1 + (9.563 * stats.weight) + (1.850 * stats.height) - (4.676 * stats.age);
+		if(gender == 'm') {
+	    bmr = 66.5 + (13.75 * weight) + (5.003 * height ) - (6.75 * age);
+		} else if (gender == 'f') {
+			bmr = 655.1 + (9.563 * weight) + (1.850 * height) - (4.676 * age);
 		} 
-		if(stats.activityFactor == 'n') {
+		if(activity == 'n') {
 			calories = (int)(bmr * 1.2);
-		} else if (stats.activityFactor == 's') {
+		} else if (activity == 's') {
 			calories = (int)(bmr * 1.375);
-		}else if (stats.activityFactor == 'm') {
+		}else if (activity == 'm') {
 			calories = (int)(bmr * 1.55);
-		}else if (stats.activityFactor == 'l') {
+		}else if (activity == 'l') {
 			calories = (int)(bmr * 1.725);
-		}else if (stats.activityFactor == 'x') {
+		}else if (activity == 'x') {
 			calories = (int)(bmr * 1.9);
 		}
 		
