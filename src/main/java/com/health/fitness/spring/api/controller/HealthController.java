@@ -9,9 +9,9 @@ import healt.fitness.api.model.HealthStatus;
 
 
 @RestController
-
+@CrossOrigin("*")
 public class HealthController {
-	@CrossOrigin("*")
+
 	@GetMapping("/bmi")
 	public HealthStatus calculateBMIMetric(@RequestParam Double height, @RequestParam Double weight  ) {
 		height = height / 100;
@@ -26,7 +26,7 @@ public class HealthController {
 		}
 		return new HealthStatus( bmi, bmiRange);
 	}
-	@CrossOrigin("*")
+
 	@GetMapping("/calories")
 	public CalorieVariations  calculteCalories(@RequestParam Double height,  @RequestParam Double weight, @RequestParam  int age,  @RequestParam char gender, @RequestParam char activity) {
 		double bmr = 0;
